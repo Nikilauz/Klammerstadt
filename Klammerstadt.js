@@ -4,15 +4,10 @@ const puzzleTextField = document.getElementById('puzzleText');
 var levels = document.getElementById('levels');
 
 
-<<<<<<< HEAD
-let guessesString = "";
-let puzzleText = "[[Land am [___s: Gänseflieger]] erklärt [[Die Bootgang, Hellapagos oder Hanabi][Zutat für [\"___ die mag ich sehr, sie schmecken mir am besten\"] die durch auspressen mit Handtuch und trocknen lassen gewonnen wird]]n [[D-___; Grenzgebiet; Zuckerberg] mit Zucker (🍎)]k, dass [___o: ist doch kein Ver[übergeben; trennen; fraktionieren] (De[längster Fluss in 🇮🇳]tri[form___: präzise beschrieben])][Acryl___: Entsteht beim zu heißen f[Mönchhausen auf Kanonenkugel]ieren von [Erdäpfel (Plural)]]en nicht von [[Prophet im Islam] 🥊]ens gebaut wurden.";
-=======
 
-let puzzleText = "standard puzzle text";
+let puzzleText = "[[Land am [___s: Gänseflieger]] erklärt [[Die Bootgang, Hellapagos oder Hanabi][Zutat für [\"___ die mag ich sehr, sie schmecken mir am besten\"] die durch auspressen mit Handtuch und trocknen lassen gewonnen wird]]n [[D-___; Grenzgebiet; Zuckerberg] mit Zucker (🍎)]k, dass [___o: ist doch kein Ver[übergeben; trennen; fraktionieren] (De[längster Fluss in 🇮🇳]tri[form___: präzise beschrieben])][Acryl___: Entsteht beim zu heißen f[Mönchhausen auf Kanonenkugel]ieren von [Erdäpfel (Plural)]]en nicht von [[Prophet im Islam] 🥊]ens gebaut wurden.";
 let gesamtlösung = null;
 let frageAntwortArr = null;
->>>>>>> origin/handleGuesses
 let JSONdata = null;
 
 let gelösteKlammern = [];
@@ -108,6 +103,6 @@ innnerIndices.forEach(([start, end]) => {
 
 
 // console.log(Jpuzzle)
-// displayPuzzleText();
+displayPuzzleText();
 
 console.log("test done");

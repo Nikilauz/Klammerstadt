@@ -13,16 +13,26 @@ mark {
 	background-color: #FFB6C1;
 }
 
+input {
+	display: inline-block;
+  vertical-align: middle;
+}
+
+.parseInputButton {
+	display: inline-block;
+  vertical-align: middle;
+}
+
 .puzzletext-box{
 	width: 70%;
 	background-color: white;
-	margin: 8px;
+	margin: 16px;
 	padding: 8px;
 }
 
 .guesses-box {
 	background-color: white;
-	margin: 8px;
+	margin: 16px;
 	padding: 8px;
 	width: 70%;
 	height: 8em;
