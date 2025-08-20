@@ -14,24 +14,34 @@ let gelösteKlammern = [];
 
 
 function parseNewGuess() {
-	// guessesString = inputFeld.value + "<br />" + guessesString;
-	// guesses.innerHTML = guessesString;
-	// inputFeld.value = '';
 	
+	// parse guess
 	const guess = inputFeld.value.trim();
 	if (!guess) return;
+
+	// generate open questions
 	const offeneFragen = getInnerBracketSubstrings(puzzleText);
 
-
+	// check if guess is solution to open question
 	if (frageAntwortArr) {
-		const matches = frageAntwortArr.filter(([frage, antwort]) => antwort === guess);
+		const matches = frageAntwortArr.filter(([frage, antwort]) => antwort.toLowerCase() === guess.toLowerCase());
 		matches.forEach(found => {
-			// checken ob frage ganz bereits lösbar ist
-			if (offeneFragen.includes(found[0])) {
+			// checken ob frage bereits lösbar ist
+			if (offeneFragen.some(f => f.toLowerCase() === found[0].toLowerCase())) {
 				gelösteKlammern.unshift(found);
 			}
 		});
 	}
+
+	// replace question with solution
+	gelösteKlammern.forEach(([frage, antwort]) => {
+		const regex = new RegExp(`\\[${frage.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\]`, 'i');
+		puzzleText = puzzleText.replace(regex, antwort);
+	});
+	displayPuzzleText();
+
+	// replace question with answer
+
 	inputFeld.value = '';
 	inputFeld.focus();
 
@@ -102,9 +112,6 @@ inputFeld.addEventListener('keydown', function (event) {
 	}
 });
 
-
-
-
-
-
+// load file
 loadJSON('raetsel1.json');
+inputFeld.focus();
