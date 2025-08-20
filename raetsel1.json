@@ -1,9 +1,13 @@
 {
     "name":"Rätsel 1",
     "author":"Jannis",
-    "rätsel":"[4. Buch [___t: Hier Getränk, dort das Meiste]e][19. Element; Abk.] [Um[Folge von Wörtern] - [roh➡️___⬅️bar]en]t [[🦧？]]s [[👨🏻⚕️- r🌊=🎸] [___en bitte!; 💵]][Frag[Nur wer ___ ist, kann den Hammer heben ⚡️🔨]er [Viet___; 🇻🇳]e: ____mius; ✒️👴🏻][Sag ___ ___]r"
+    "rätsel":"[[Land am [___s: Gänseflieger]] erklärt [[Die Bootgang, Hellapagos oder Hanabi][Zutat für ["___ die mag ich sehr, sie schmecken mir am besten"] die durch auspressen mit Handtuch und trocknen lassen gewonnen wird]]n [[D-___; Grenzgebiet; Zuckerberg] mit Zucker (🍎)]k, dass [___o: ist doch kein Ver[übergeben; trennen; fraktionieren] (De[längster Fluss in 🇮🇳]tri[form___: präzise beschrieben])][Acryl___: Entsteht beim zu heißen f[Mönchhausen auf Kanonenkugel]ieren von [Erdäpfel (Plural)]]en nicht von [[Prophet im Islam] 🥊]ens gebaut wurden."
     "frageAntwort":[
-        {"frage":"[___t: Hier Getränk, dort das Meiste]", "antwort":"bottomtext"}
-        
+        {"frage":"Land am Nil", "antwort":"Ägypten"}
+        {"frage":"___s: Gänseflieger", "antwort":"Nil"}
+        {"frage":"Spielstärke", "antwort":"Elo"}
+        {"frage":"Muhammad 🥊", "antwort":"Ali"}
+        {"frage":"Prophet im Islam", "antwort":"Muhammad"}
+        {"frage":"", "antwort":""}
     ]
 }
