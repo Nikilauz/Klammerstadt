@@ -2,34 +2,40 @@ const inputFeld = document.getElementById('inputBox');
 const guesses = document.getElementById('guesses');
 var levels = document.getElementById('levels');
 
+
+
+
+
+
+
+
+function readStringFromFile(filePath) {
+	try {
+		const data = fs.readFileSync(filePath, 'utf8');
+		return data;
+	} catch (err) {
+		console.error('Error reading file:', err);
+		return null;
+	}
+}
+
+
+let text = readStringFromFile("./testks.txt")
+
+
+
+
 let guessesString = "";
 
 
-inputFeld.addEventListener('keydown', function(event) {
-  if (event.key === 'Enter') {
-    event.preventDefault();
+inputFeld.addEventListener('keydown', function (event) {
+	if (event.key === 'Enter') {
+		event.preventDefault();
 
-    readAndDisplay();
-    inputFeld.focus();
-  }
+		readAndDisplay();
+		inputFeld.focus();
+	}
 });
-
-
-//create all the level buttons
-const fs = require('fs');
-const path = require('path')
-
-const jsonsInDir = fs.readdirSync('./').filter(file => path.extname(file) === '.json');
-
-jsonsInDir.forEach(file => {
-  const fileData = fs.readFileSync(path.join('./', file));
-  const obj = JSON.parse(fileData.toString());
-	const butt = document.createElement("BUTTON");
-	const tex = document.createTextNode(obj.name);
-	butt.appendChild(tex);
-	levels.appendChild(butt);
-});
-
 
 
 
@@ -38,7 +44,7 @@ inputFeld.focus();
 function readAndDisplay() {
 	guessesString = inputFeld.value + "<br />" + guessesString;
 	guesses.innerHTML = guessesString;
-  inputFeld.value = '';
+	inputFeld.value = '';
 }
 
 function ksBit(phrase, solution, start, end, kids) {
@@ -48,3 +54,20 @@ function ksBit(phrase, solution, start, end, kids) {
 	this.end = end;
 	this.kids = kids;
 }
+
+
+//create all the level buttons
+const fs = require('fs');
+const path = require('path')
+
+const jsonsInDir = fs.readdirSync('./').filter(file => path.extname(file) === '.json');
+
+jsonsInDir.forEach(file => {
+	const fileData = fs.readFileSync(path.join('./', file));
+	const obj = JSON.parse(fileData.toString());
+	const butt = document.createElement("BUTTON");
+	const tex = document.createTextNode(obj.name);
+	butt.appendChild(tex);
+	levels.appendChild(butt);
+});
+
