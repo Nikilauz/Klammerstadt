@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Datei automatisch einlesen</title>
+</head>
+<body>
+  <h2>Zeilen aus beispiel.txt:</h2>
+  <pre id="output"></pre>
+
+  <script>
+    fetch('raetsel1.txt')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Fehler beim Laden der Datei: ${response.status}`);
+        }
+        return response.text();
+      })
+      .then(text => {
+        const lines = text.split(/\r?\n/); // Zeilenumbruch Unix/Windows
+
+        const output = document.getElementById('output');
+        output.textContent = lines.join('\n');
+      })
+      .catch(error => {
+        console.error('Fehler:', error);
+      });
+  </script>
+</body>
+</html>
