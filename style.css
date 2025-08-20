@@ -9,8 +9,12 @@ body {
 	font-weight: 100;
 }
 
+mark {
+	background-color: #FFB6C1;
+}
+
 .puzzletext-box{
-	width: 300px;
+	width: 70%;
 	background-color: white;
 	margin: 8px;
 	padding: 8px;
@@ -20,7 +24,7 @@ body {
 	background-color: white;
 	margin: 8px;
 	padding: 8px;
-	width: 300px;
+	width: 70%;
 	height: 8em;
 	overflow-y: auto;
 }

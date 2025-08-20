@@ -4,9 +4,8 @@ const puzzleTextField = document.getElementById('puzzleText');
 var levels = document.getElementById('levels');
 
 
-
 let guessesString = "";
-let puzzleText = "standard puzzle text";
+let puzzleText = "[[Land am [___s: Gänseflieger]] erklärt [[Die Bootgang, Hellapagos oder Hanabi][Zutat für [\"___ die mag ich sehr, sie schmecken mir am besten\"] die durch auspressen mit Handtuch und trocknen lassen gewonnen wird]]n [[D-___; Grenzgebiet; Zuckerberg] mit Zucker (🍎)]k, dass [___o: ist doch kein Ver[übergeben; trennen; fraktionieren] (De[längster Fluss in 🇮🇳]tri[form___: präzise beschrieben])][Acryl___: Entsteht beim zu heißen f[Mönchhausen auf Kanonenkugel]ieren von [Erdäpfel (Plural)]]en nicht von [[Prophet im Islam] 🥊]ens gebaut wurden.";
 let JSONdata = null;
 
 
@@ -18,18 +17,23 @@ function parseNewGuess() {
 
 function displayPuzzleText() {
 	let displayText = "";
-	leafBracketPositions = 
-	for(int leafBracketIndex = 0; i < leafBrackets; i++) {
-		
-	}
-	puzzleTextField.innerText = puzzleText;
+	let innerIndices = getInnerBracketIndices(puzzleText);
+	let lastEnd = 0;
+	innerIndices.forEach(([start, end]) => {
+		displayText += puzzleText.substring(lastEnd, start-1);
+		displayText += "<mark>" + puzzleText.substring(start, end+1) + "</mark>";
+		lastEnd = end;
+	});
+	puzzleTextField.innerHTML = displayText;
 }
+
+displayPuzzleText();
 
 
 inputFeld.addEventListener('keydown', function (event) {
 	if (event.key === 'Enter') {
 		event.preventDefault();
-
+		
 		parseNewGuess();
 		inputFeld.focus();
 	}
@@ -72,20 +76,4 @@ function getInnerBracketIndices(string){
 	return result;
 }
 
-
-// puzzleText = Jauthor;
-console.log("start test");
-
-loadJSON('raetsel1.json');
-
-let str = "[a[b[c]def[gasd[hallo]sd]]jkasfdjk]";
-let innnerIndices = getInnerBracketIndices(str);
-innnerIndices.forEach(([start, end]) => {
-	console.log(str.substring(start, end + 1));
-});
-
-
-// console.log(Jpuzzle)
-// displayPuzzleText();
-
-console.log("test done");
+// loadJSON('raetsel1.json');
