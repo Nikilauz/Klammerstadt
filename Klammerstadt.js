@@ -17,8 +17,26 @@ function parseNewGuess() {
 	// guessesString = inputFeld.value + "<br />" + guessesString;
 	// guesses.innerHTML = guessesString;
 	// inputFeld.value = '';
-
 	
+	const guess = inputFeld.value.trim();
+	if (!guess) return;
+	const offeneFragen = getInnerBracketSubstrings(puzzleText);
+
+
+	if (frageAntwortArr) {
+		const matches = frageAntwortArr.filter(([frage, antwort]) => antwort === guess);
+		matches.forEach(found => {
+			// checken ob frage ganz bereits lösbar ist
+			console.log(offeneFragen)
+			console.log(matches)
+			if (offeneFragen.includes(found[0])) {
+				gelösteKlammern.unshift(found);
+				console.log(gelösteKlammern)
+			}
+		});
+	}
+	inputFeld.value = '';
+	inputFeld.focus();
 
 	guesses.innerHTML = solvedBracketsToSTring();
 }
@@ -70,6 +88,10 @@ function getInnerBracketIndices(string){
 	return result;
 }
 
+function getInnerBracketSubstrings(string) {
+	const indices = getInnerBracketIndices(string);
+	return indices.map(([start, end]) => string.substring(start + 1, end));
+}
 
 
 
@@ -84,19 +106,8 @@ inputFeld.addEventListener('keydown', function (event) {
 });
 
 
-// puzzleText = Jauthor;
-console.log( "start test");
+
+
+
 
 loadJSON('raetsel1.json');
-
-let str = "[a[b[c]def[gasd[hallo]sd]]jkasfdjk]";
-let innnerIndices = getInnerBracketIndices(str);
-innnerIndices.forEach(([start, end]) => {
-	console.log(str.substring(start, end + 1));
-});
-
-
-// console.log(Jpuzzle)
-// displayPuzzleText();
-
-console.log("test done");
