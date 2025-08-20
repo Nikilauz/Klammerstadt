@@ -17,15 +17,12 @@ function readAndDisplay() {
 }
 
 function displayPuzzleText() {
-	// let displayString = "";
-	
-	// //iterate over String and highlight the "leaf"-backets.
-	// let firstUnmarkedIndex = 0
-	// //iterate over whole text
-	// for(let i = 0; i < puzzleText.length; i++) {
+	let displayText = "";
+	leafBracketPositions = 
+	for(int leafBracketIndex = 0; i < leafBrackets; i++) {
 		
-	// }
-	// puzzleTextField.innerHTML = displayString;
+	}
+	
 	puzzleTextField.innerText = puzzleText;
 }
 
@@ -55,7 +52,7 @@ fetch('raetsel1.json')
 
 
 // puzzleText = Jauthor;
-console.log( "start test");
+console.log("start test");
 
 // console.log(Jpuzzle)
 // displayPuzzleText();

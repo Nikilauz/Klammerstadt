@@ -9,6 +9,13 @@ body {
 	font-weight: 100;
 }
 
+.puzzletext-box{
+	width: 300px;
+	background-color: white;
+	margin: 8px;
+	padding: 8px;
+}
+
 .guesses-box {
 	background-color: white;
 	margin: 8px;

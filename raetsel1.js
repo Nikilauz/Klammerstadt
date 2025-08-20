@@ -1,4 +1,4 @@
-{
+let data = "{
 		"name":"Rätsel 1",
 		"author":"Moritz",
 		"gesamtlösung":"Ägypten erklärt Elon Musk, dass Pyramiden nicht von Aliens gebaut wurden.",
@@ -12,4 +12,4 @@
 				{"frage":"Prophet im Islam", "antwort":"Muhammad"},
 				{"frage":"", "antwort":""}
 		]
-}
+}"
