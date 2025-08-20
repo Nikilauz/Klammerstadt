@@ -10,22 +10,13 @@ let puzzleText = "standard puzzle text";
 let JSONdata = null;
 
 
-function readAndDisplay() {
+function parseNewGuess() {
 	guessesString = inputFeld.value + "<br />" + guessesString;
 	guesses.innerHTML = guessesString;
 	inputFeld.value = '';
 }
 
 function displayPuzzleText() {
-	// let displayString = "";
-	
-	// //iterate over String and highlight the "leaf"-backets.
-	// let firstUnmarkedIndex = 0
-	// //iterate over whole text
-	// for(let i = 0; i < puzzleText.length; i++) {
-		
-	// }
-	// puzzleTextField.innerHTML = displayString;
 	puzzleTextField.innerText = puzzleText;
 }
 
@@ -34,7 +25,7 @@ inputFeld.addEventListener('keydown', function (event) {
 	if (event.key === 'Enter') {
 		event.preventDefault();
 
-		readAndDisplay();
+		parseNewGuess();
 		inputFeld.focus();
 	}
 });
@@ -42,20 +33,52 @@ inputFeld.addEventListener('keydown', function (event) {
 inputFeld.focus();
 
 
-fetch('raetsel1.json')
-	.then(response => response.json())
-	.then(data => {
-		JSONdata = data;
-		puzzleText = JSONdata.rätsel;
-		displayPuzzleText();
-	})
-	.catch(error => {
-		console.error('Error loading JSON:', error);
-	});
+function loadJSON(file){
+	fetch(file)
+		.then(response => response.json())
+		.then(data => {
+			JSONdata = data;
+			puzzleText = JSONdata.rätsel;
+			displayPuzzleText();
+		})
+		.catch(error => {
+			console.error('Error loading JSON:', error);
+		});
+}
+
+function getInnerBracketIndices(string){
+	let result = [];
+	let stack = [];
+
+	for (let i = 0; i < string.length; i++) {
+		if (string[i] === '[') {
+			stack.push(i);
+		} else if (string[i] === ']') {
+			let openIndex = stack.pop();
+			if (openIndex !== undefined) {
+				// Check if there are no other brackets inside
+				let inner = string.slice(openIndex + 1, i);
+				if (!inner.includes('[') && !inner.includes(']')) {
+					result.push([openIndex, i]);
+				}
+			}
+		}
+	}
+	return result;
+}
 
 
 // puzzleText = Jauthor;
 console.log( "start test");
+
+loadJSON('raetsel1.json');
+
+let str = "[a[b[c]def[gasd[hallo]sd]]jkasfdjk]";
+let innnerIndices = getInnerBracketIndices(str);
+innnerIndices.forEach(([start, end]) => {
+	console.log(str.substring(start, end + 1));
+});
+
 
 // console.log(Jpuzzle)
 // displayPuzzleText();
