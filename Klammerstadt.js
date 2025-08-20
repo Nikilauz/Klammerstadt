@@ -5,45 +5,48 @@ var levels = document.getElementById('levels');
 
 
 
-let guessesString = "";
 let puzzleText = "standard puzzle text";
+let gesamtlösung = null;
+let frageAntwortArr = null;
 let JSONdata = null;
+
+let gelösteKlammern = [];
 
 
 function parseNewGuess() {
-	guessesString = inputFeld.value + "<br />" + guessesString;
-	guesses.innerHTML = guessesString;
-	inputFeld.value = '';
+	// guessesString = inputFeld.value + "<br />" + guessesString;
+	// guesses.innerHTML = guessesString;
+	// inputFeld.value = '';
+
+	
+
+	guesses.innerHTML = solvedBracketsToSTring();
+}
+
+function solvedBracketsToSTring() {
+	return gelösteKlammern
+		.map(([question, solution]) => `${question}: ${solution}`)
+		.join('<br />');
 }
 
 function displayPuzzleText() {
 	puzzleTextField.innerText = puzzleText;
 }
 
-
-inputFeld.addEventListener('keydown', function (event) {
-	if (event.key === 'Enter') {
-		event.preventDefault();
-
-		parseNewGuess();
-		inputFeld.focus();
-	}
-});
-
-inputFeld.focus();
-
-
 function loadJSON(file){
 	fetch(file)
 		.then(response => response.json())
 		.then(data => {
 			JSONdata = data;
-			puzzleText = JSONdata.rätsel;
+			puzzleText = data.rätsel;
+			gesamtlösung = data.gesamtlösung;
+			frageAntwortArr = data.frageAntwort.map(obj => [obj.frage, obj.antwort]);
 			displayPuzzleText();
 		})
 		.catch(error => {
 			console.error('Error loading JSON:', error);
 		});
+	
 }
 
 function getInnerBracketIndices(string){
@@ -66,6 +69,19 @@ function getInnerBracketIndices(string){
 	}
 	return result;
 }
+
+
+
+
+
+inputFeld.addEventListener('keydown', function (event) {
+	if (event.key === 'Enter') {
+		event.preventDefault();
+
+		parseNewGuess();
+		inputFeld.focus();
+	}
+});
 
 
 // puzzleText = Jauthor;
