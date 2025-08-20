@@ -1,31 +1,11 @@
 const inputFeld = document.getElementById('inputBox');
 const guesses = document.getElementById('guesses');
 var levels = document.getElementById('levels');
-
-
-
-
-
-
-
-
-function readStringFromFile(filePath) {
-	try {
-		const data = fs.readFileSync(filePath, 'utf8');
-		return data;
-	} catch (err) {
-		console.error('Error reading file:', err);
-		return null;
-	}
-}
-
-
-let text = readStringFromFile("./testks.txt")
-
-
-
+const puzzleTextField = document.getElementById('puzzleText');
 
 let guessesString = "";
+
+let puzzleText = "Klamm[erst]adt"; //TODO: aus Datei einlesen
 
 
 inputFeld.addEventListener('keydown', function (event) {
@@ -55,19 +35,17 @@ function ksBit(phrase, solution, start, end, kids) {
 	this.kids = kids;
 }
 
-
-//create all the level buttons
-const fs = require('fs');
-const path = require('path')
-
-const jsonsInDir = fs.readdirSync('./').filter(file => path.extname(file) === '.json');
-
-jsonsInDir.forEach(file => {
-	const fileData = fs.readFileSync(path.join('./', file));
-	const obj = JSON.parse(fileData.toString());
-	const butt = document.createElement("BUTTON");
-	const tex = document.createTextNode(obj.name);
-	butt.appendChild(tex);
-	levels.appendChild(butt);
-});
-
+function displayPuzzleText() {
+	let displayString = "";
+	
+	
+	//iterate over String and highlight the "leaf"-backets.
+	let firstUnmarkedIndex = 0
+	//iterate over whole text
+	for(let i = 0; i < puzzleText.length; i++) {
+		
+	}
+	
+	
+	puzzleTextField.innerHTML = displayString;
+}
