@@ -27,11 +27,8 @@ function parseNewGuess() {
 		const matches = frageAntwortArr.filter(([frage, antwort]) => antwort === guess);
 		matches.forEach(found => {
 			// checken ob frage ganz bereits lösbar ist
-			console.log(offeneFragen)
-			console.log(matches)
 			if (offeneFragen.includes(found[0])) {
 				gelösteKlammern.unshift(found);
-				console.log(gelösteKlammern)
 			}
 		});
 	}
