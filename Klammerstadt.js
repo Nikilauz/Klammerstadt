@@ -6,8 +6,8 @@ var levels = document.getElementById('levels');
 
 
 let guessesString = "";
-let puzzleText = "Klamm[erst]adt"; //TODO: aus Datei einlesen
-
+let puzzleText = "standard puzzle text";
+let JSONdata = null;
 
 
 function readAndDisplay() {
@@ -17,15 +17,16 @@ function readAndDisplay() {
 }
 
 function displayPuzzleText() {
-	let displayString = "";
+	// let displayString = "";
 	
-	//iterate over String and highlight the "leaf"-backets.
-	let firstUnmarkedIndex = 0
-	//iterate over whole text
-	for(let i = 0; i < puzzleText.length; i++) {
+	// //iterate over String and highlight the "leaf"-backets.
+	// let firstUnmarkedIndex = 0
+	// //iterate over whole text
+	// for(let i = 0; i < puzzleText.length; i++) {
 		
-	}
-	puzzleTextField.innerHTML = displayString;
+	// }
+	// puzzleTextField.innerHTML = displayString;
+	puzzleTextField.innerText = puzzleText;
 }
 
 
@@ -39,3 +40,24 @@ inputFeld.addEventListener('keydown', function (event) {
 });
 
 inputFeld.focus();
+
+
+fetch('raetsel1.json')
+	.then(response => response.json())
+	.then(data => {
+		JSONdata = data;
+		puzzleText = JSONdata.rätsel;
+		displayPuzzleText();
+	})
+	.catch(error => {
+		console.error('Error loading JSON:', error);
+	});
+
+
+// puzzleText = Jauthor;
+console.log( "start test");
+
+// console.log(Jpuzzle)
+// displayPuzzleText();
+
+console.log("test done");
