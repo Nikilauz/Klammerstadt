@@ -5,7 +5,7 @@ var levels = document.getElementById('levels');
 
 
 
-let puzzleText = "[[Land am [___s: Gänseflieger]] erklärt [[Die Bootgang, Hellapagos oder Hanabi][Zutat für [\"___ die mag ich sehr, sie schmecken mir am besten\"] die durch auspressen mit Handtuch und trocknen lassen gewonnen wird]]n [[D-___; Grenzgebiet; Zuckerberg] mit Zucker (🍎)]k, dass [___o: ist doch kein Ver[übergeben; trennen; fraktionieren] (De[längster Fluss in 🇮🇳]tri[form___: präzise beschrieben])][Acryl___: Entsteht beim zu heißen f[Mönchhausen auf Kanonenkugel]ieren von [Erdäpfel (Plural)]]en nicht von [[Prophet im Islam] 🥊]ens gebaut wurden.";
+let puzzleText = "standard puzzle text";
 let gesamtlösung = null;
 let frageAntwortArr = null;
 let JSONdata = null;
@@ -119,7 +119,6 @@ inputFeld.addEventListener('keydown', function (event) {
 });
 
 
-displayPuzzleText();
 // load file
 loadJSON('raetsel/raetsel15.json');
 inputFeld.focus();
