@@ -22,6 +22,8 @@ function parseNewGuess() {
 	// generate open questions
 	const offeneFragen = getInnerBracketSubstrings(puzzleText);
 
+	let gefundeneLösungen = []
+
 	// check if guess is solution to open question
 	if (frageAntwortArr) {
 		const matches = frageAntwortArr.filter(([frage, antwort]) => antwort.toLowerCase() === guess.toLowerCase());
@@ -29,23 +31,32 @@ function parseNewGuess() {
 			// checken ob frage bereits lösbar ist
 			if (offeneFragen.some(f => f.toLowerCase() === found[0].toLowerCase())) {
 				gelösteKlammern.unshift(found);
+				gefundeneLösungen.push(found);
 			}
 		});
 	}
 
 	// replace question with solution
-	gelösteKlammern.forEach(([frage, antwort]) => {
+	gefundeneLösungen.forEach(([frage, antwort]) => {
 		const regex = new RegExp(`\\[${frage.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\]`, 'i');
 		puzzleText = puzzleText.replace(regex, antwort);
 	});
 	displayPuzzleText();
 
-	// replace question with answer
 
-	inputFeld.value = '';
-
+	// update fields
 	guesses.innerHTML = solvedBracketsToSTring();
+
+	checkForFullSolution();
+	inputFeld.value = '';
 	inputFeld.focus();
+}
+
+function checkForFullSolution(){
+	if (puzzleText === JSONdata.gesamtlösung){
+		puzzleText.join("<br />Juhuu, Rätsel gelöst! Das hat gar nicht lang gedauert...");
+		displayPuzzleText();
+	}
 }
 
 function solvedBracketsToSTring() {
