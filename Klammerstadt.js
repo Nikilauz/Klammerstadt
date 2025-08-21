@@ -136,5 +136,5 @@ inputFeld.addEventListener('keydown', function (event) {
 
 
 // load file
-loadJSON('raetsel/raetsel15.json');
+loadJSON('raetsel/aktuelles.json');
 inputFeld.focus();
