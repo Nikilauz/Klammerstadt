@@ -2,17 +2,15 @@ python server:
 python3 -m http.server
 
 website: 
-http://localhost:8000/Klammerstadt.html
+http://localhost:8000/index.html
 
 
 
-TODOs:
-- prüfen ob rätsel insgesamt gelöst
 
 
 Erweiterungen:
 - metainfos zu rätsel anzeigen
 - rätselauswahl
-- rätseltemplate
-- upload für neue rätsel (mit Passwort?)
+- rätseltemplate + Guideline wie man ein eigenes erstellt und lokal testet
+- upload für neue rätsel (DB mit Jonas)
 - savestates? (kann github das?) -> alternativ: export von bereits gelösten fragen

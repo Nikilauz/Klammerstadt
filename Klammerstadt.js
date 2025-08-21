@@ -96,7 +96,6 @@ function loadJSON(file){
 		.catch(error => {
 			console.error('Error loading JSON:', error);
 		});
-	
 }
 
 function getInnerBracketIndices(string){
