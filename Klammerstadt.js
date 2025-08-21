@@ -14,11 +14,36 @@ let gelösteKlammern = [];
 
 
 function parseNewGuess() {
-	// guessesString = inputFeld.value + "<br />" + guessesString;
-	// guesses.innerHTML = guessesString;
-	// inputFeld.value = '';
-
 	
+	// parse guess
+	const guess = inputFeld.value.trim();
+	if (!guess) return;
+
+	// generate open questions
+	const offeneFragen = getInnerBracketSubstrings(puzzleText);
+
+	// check if guess is solution to open question
+	if (frageAntwortArr) {
+		const matches = frageAntwortArr.filter(([frage, antwort]) => antwort.toLowerCase() === guess.toLowerCase());
+		matches.forEach(found => {
+			// checken ob frage bereits lösbar ist
+			if (offeneFragen.some(f => f.toLowerCase() === found[0].toLowerCase())) {
+				gelösteKlammern.unshift(found);
+			}
+		});
+	}
+
+	// replace question with solution
+	gelösteKlammern.forEach(([frage, antwort]) => {
+		const regex = new RegExp(`\\[${frage.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\]`, 'i');
+		puzzleText = puzzleText.replace(regex, antwort);
+	});
+	displayPuzzleText();
+
+	// replace question with answer
+
+	inputFeld.value = '';
+	inputFeld.focus();
 
 	guesses.innerHTML = solvedBracketsToSTring();
 }
@@ -79,6 +104,10 @@ function getInnerBracketIndices(string){
 	return result;
 }
 
+function getInnerBracketSubstrings(string) {
+	const indices = getInnerBracketIndices(string);
+	return indices.map(([start, end]) => string.substring(start + 1, end));
+}
 
 inputFeld.addEventListener('keydown', function (event) {
 	if (event.key === 'Enter') {
@@ -90,19 +119,7 @@ inputFeld.addEventListener('keydown', function (event) {
 });
 
 
-// puzzleText = Jauthor;
-console.log( "start test");
-
-//loadJSON('raetsel1.json');
-
-let str = "[a[b[c]def[gasd[hallo]sd]]jkasfdjk]";
-let innnerIndices = getInnerBracketIndices(str);
-innnerIndices.forEach(([start, end]) => {
-	console.log(str.substring(start, end + 1));
-});
-
-
-// console.log(Jpuzzle)
 displayPuzzleText();
-
-console.log("test done");
+// load file
+loadJSON('raetsel1.json');
+inputFeld.focus();
