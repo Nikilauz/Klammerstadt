@@ -54,7 +54,7 @@ function parseNewGuess() {
 
 function checkForFullSolution(){
 	if (puzzleText === JSONdata.gesamtlösung){
-		puzzleText.join("<br />Juhuu, Rätsel gelöst! Das hat gar nicht lang gedauert...");
+		puzzleText = [puzzleText, "Juhuu, Rätsel gelöst! Das hat gar nicht lang gedauert..."].join("<br /><br />");
 		displayPuzzleText();
 	}
 }
@@ -69,11 +69,16 @@ function displayPuzzleText() {
 	let displayText = "";
 	let innerIndices = getInnerBracketIndices(puzzleText);
 	let lastEnd = 0;
-	innerIndices.forEach(([start, end]) => {
-		displayText += puzzleText.substring(lastEnd, start-1);
-		displayText += "<mark>" + puzzleText.substring(start, end+1) + "</mark>";
-		lastEnd = end;
-	});
+	if(innerIndices.length === 0) {
+		displayText = puzzleText;
+	} else {
+		innerIndices.forEach(([start, end]) => {
+			displayText += puzzleText.substring(lastEnd, start);
+			displayText += "<mark>" + puzzleText.substring(start, end + 1) + "</mark>";
+			lastEnd = end + 1;
+		});
+		displayText += puzzleText.substring(lastEnd);
+	}
 	puzzleTextField.innerHTML = displayText;
 }
 
