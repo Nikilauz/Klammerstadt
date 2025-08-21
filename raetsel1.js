@@ -1,0 +1,15 @@
+let data = "{
+		"name":"Rätsel 1",
+		"author":"Moritz",
+		"gesamtlösung":"Ägypten erklärt Elon Musk, dass Pyramiden nicht von Aliens gebaut wurden.",
+		"jahr":"2020",
+		"rätsel":"[[Land am [___s: Gänseflieger]] erklärt [[Die Bootgang, Hellapagos oder Hanabi][Zutat für [\"___ die mag ich sehr, sie schmecken mir am besten\"] die durch auspressen mit Handtuch und trocknen lassen gewonnen wird]]n [[D-___; Grenzgebiet; Zuckerberg] mit Zucker (🍎)]k, dass [___o: ist doch kein Ver[übergeben; trennen; fraktionieren] (De[längster Fluss in 🇮🇳]tri[form___: präzise beschrieben])][Acryl___: Entsteht beim zu heißen f[Mönchhausen auf Kanonenkugel]ieren von [Erdäpfel (Plural)]]en nicht von [[Prophet im Islam] 🥊]ens gebaut wurden.",
+		"frageAntwort":[
+				{"frage":"Land am Nil", "antwort":"Ägypten"},
+				{"frage":"___s: Gänseflieger", "antwort":"Nil"},
+				{"frage":"Spielstärke", "antwort":"Elo"},
+				{"frage":"Muhammad 🥊", "antwort":"Ali"},
+				{"frage":"Prophet im Islam", "antwort":"Muhammad"},
+				{"frage":"", "antwort":""}
+		]
+}"

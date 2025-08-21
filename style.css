@@ -9,11 +9,39 @@ body {
 	font-weight: 100;
 }
 
+mark {
+	background-color: #FFB6C1;
+}
+
+input {
+  vertical-align: middle;
+}
+
+button {
+	border: 2px solid #7B68EE;
+}
+
+button:hover {
+	background-color: #7B68EE;
+}
+
+.parseInputButton {
+	display: inline-block;
+  vertical-align: middle;
+}
+
+.puzzletext-box{
+	width: 70%;
+	background-color: white;
+	margin: 16px;
+	padding: 8px;
+}
+
 .guesses-box {
 	background-color: white;
-	margin: 8px;
+	margin: 16px;
 	padding: 8px;
-	width: 300px;
+	width: 70%;
 	height: 8em;
 	overflow-y: auto;
 }
