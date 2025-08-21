@@ -43,9 +43,9 @@ function parseNewGuess() {
 	// replace question with answer
 
 	inputFeld.value = '';
-	inputFeld.focus();
 
 	guesses.innerHTML = solvedBracketsToSTring();
+	inputFeld.focus();
 }
 
 function solvedBracketsToSTring() {
