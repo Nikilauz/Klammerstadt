@@ -1,5 +1,8 @@
-python server: python3 -m http.server
-website: http://localhost:8000/Klammerstadt.html
+python server: 
+python3 -m http.server
+
+website: 
+http://localhost:8000/Klammerstadt.html
 
 
 
