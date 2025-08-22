@@ -1,5 +1,7 @@
 python server: 
 python3 -m http.server
+python -m http.server
+
 
 website: 
 http://localhost:8000/index.html
