@@ -14,7 +14,7 @@ let gelösteKlammern = [];
 
 
 function parseNewGuess() {
-	
+
 	// parse guess
 	const guess = inputFeld.value.trim();
 	if (!guess) return;
@@ -52,8 +52,8 @@ function parseNewGuess() {
 	inputFeld.focus();
 }
 
-function checkForFullSolution(){
-	if (puzzleText === JSONdata.gesamtlösung){
+function checkForFullSolution() {
+	if (puzzleText === JSONdata.gesamtlösung) {
 		puzzleText = [puzzleText, "Juhuu, Rätsel gelöst! Das hat gar nicht lang gedauert..."].join("<br /><br />");
 		displayPuzzleText();
 	}
@@ -69,7 +69,7 @@ function displayPuzzleText() {
 	let displayText = "";
 	let innerIndices = getInnerBracketIndices(puzzleText);
 	let lastEnd = 0;
-	if(innerIndices.length === 0) {
+	if (innerIndices.length === 0) {
 		displayText = puzzleText;
 	} else {
 		innerIndices.forEach(([start, end]) => {
@@ -83,7 +83,7 @@ function displayPuzzleText() {
 }
 
 
-function loadJSON(file){
+function loadJSON(file) {
 	fetch(file)
 		.then(response => response.json())
 		.then(data => {
@@ -98,7 +98,7 @@ function loadJSON(file){
 		});
 }
 
-function getInnerBracketIndices(string){
+function getInnerBracketIndices(string) {
 	let result = [];
 	let stack = [];
 
@@ -133,7 +133,77 @@ inputFeld.addEventListener('keydown', function (event) {
 	}
 });
 
+// Encodes a unicode string to url-safe base64, i.e. can be used as a url-parameter.
+// To ensure URL-safety, we replace some base64 characters. To correctly decode, use the function below.
+function encodeToURLSafeBase64(str) {
+	const UTF8Array = (new TextEncoder()).encode(str); // Convert general Unicode to an UTF-8-Array
+	const Base64string = btoa(String.fromCharCode(...UTF8Array)) // Convert that UTF-8-Array into Base64
 
-// load file
-loadJSON('raetsel/aktuelles.json');
+	// Base64 contains A–Z a–z 0–9 + / and = for padding.
+	// The last 3 are not URL-safe, so we replace them with URL-safe alternative symbols (or strip the extra '=')
+	const urlSafeEncoding = Base64string.replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "")
+	return urlSafeEncoding
+}
+
+// Decodes a string created with the above encoding function to a unicode string.
+function decodeURLSafeBase64(str) {
+	let Base64string = str.replace(/-/g, "+").replace(/_/g, "/"); // We replace the URL-safe variants with their correct Base64 counterparts
+
+	// And add the stripped "=" symbols until the string is again valid Base64 (has a multiple of 4 length)
+	while (Base64string % 4) {
+		Base64string += "=";
+	}
+
+	const UTF8Array = Uint8Array.from(atob(Base64string), c => c.charCodeAt(0)); // Convert Base64-string back to an UTF-8-Array
+	return (new TextDecoder()).decode(UTF8Array); // and parse this as a string and return it.
+}
+
+const urlParameters = new URLSearchParams(window.location.search);
+const puzzleValue = urlParameters.get('') // Assume the encoded string is behind the unnamed parameter, i.e. https://foo.bar/?=<value>
+// Otherwise, we could use a named parameter, i.e. https://foo.bar/?puzzle=<value>
+
+// If the parameter is set, use it, otherwise load a default puzzle.
+if (puzzleValue) {
+	try {
+
+		//puzzleString = decodeURIComponent(atob(puzzleValue))
+		puzzleString = decodeURLSafeBase64(puzzleValue);
+		console.log(puzzleString)
+		data = JSON.parse(puzzleString);
+
+		//binaryData = Uint8Array.from(atob(puzzleValue), c => c.charCodeAt(0));
+		//data = (new TextDecoder).decode(binaryData);
+
+		// Decode Base64 string and then parse the value into a JSON-object
+		//data = JSON.parse(a);
+
+		console.log(data);
+
+		JSONdata = data;
+		puzzleText = data.rätsel;
+		gesamtlösung = data.gesamtlösung;
+		frageAntwortArr = data.frageAntwort.map(obj => [obj.frage, obj.antwort]);
+		displayPuzzleText();
+
+
+	} catch (err) {
+		console.log("Error loading puzzle from URL parameter");
+		console.log(err)
+		loadJSON('raetsel/aktuelles.json');
+	}
+} else {
+	loadJSON('raetsel/aktuelles.json');
+}
+
 inputFeld.focus();
+
+// How to share custom puzzles:
+// Transform your puzzle into a JSON-object in the style of any other puzzle you can find in the raetsel/ folder.
+// encode this JSON-object into a special Base64-encoding via first stringifying it (escaping some characters):
+// JSON.stringify(object)
+// and then encoding it:
+// encodeToURLSafeBase64(str)
+//
+// You can then play your puzzle by putting this (loooong) string behind the url as a parameter:
+// https://klammerstadt.de/?=<value>
+// Where <value> is your loooong string you got from the encoding.
