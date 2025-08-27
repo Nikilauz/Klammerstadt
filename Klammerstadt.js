@@ -208,12 +208,7 @@ inputFeld.focus();
 // https://klammerstadt.de/?=<value>
 // Where <value> is your loooong string you got from the encoding.
 
-
-const createString = "Neues Rätsel erstellen"
-const guessString = "Weiter raten..."
-
 const toggleButton = document.querySelector("#toggleView button")
 toggleButton.onclick = () => document.querySelectorAll("body>div:not(#toggleView)")
 	.forEach(e => e.classList.toggle("no-display"))
-toggleButton.innerText = createString
 
