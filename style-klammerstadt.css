@@ -61,6 +61,11 @@ button:hover {
 	background-color: white;
 }
 
+#creator textarea {
+	width: 70%;
+	margin: 16px;
+}
+
 .no-display {
 	display: none;
 }

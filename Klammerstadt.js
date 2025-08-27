@@ -231,6 +231,6 @@ toggleButton.onclick = () => document.querySelectorAll("body>div:not(#toggleView
 	.forEach(e => e.classList.toggle("no-display"))
 
 const createArea = document.querySelector("#creator textarea")
-const shareLink = document.querySelector("#creator a")
+const shareLink = document.querySelector("#shareLink a")
 createArea.onchange = () => shareLink.setAttribute("href",
 	".?=" + encodeURIComponent(compress(createArea.value)))
