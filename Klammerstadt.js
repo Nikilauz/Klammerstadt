@@ -133,6 +133,33 @@ inputFeld.addEventListener('keydown', function (event) {
 	}
 });
 
+
+// detect puzzle from url
+
+
+// (de-)compression: https://evanhahn.com/javascript-compression-streams-api-with-strings/
+
+async function pumpDataThrough(stream, data) {
+	const frameStream = new Blob([data]).stream().pipeThrough(stream)
+	const chunks = new Uint8Array([])
+	for await (const byteChunk of frameStream) {
+		chunks.push(byteChunk)
+	}
+	return chunks.flat()
+}
+
+async function compress(text) {
+	return await pumpDataThrough(new CompressionStream("gzip"), await new Textencoder().encode(text)).toBase64()
+}
+
+async function decompress(base64String) {
+	return new TextDecoder().decode(
+		await pumpDataThrough(new DecompressionStream("gzip"), Uint8Array.fromBase64(base64String))
+	)
+}
+
+// legacy de-/encoding
+
 // Encodes a unicode string to url-safe base64, i.e. can be used as a url-parameter.
 // To ensure URL-safety, we replace some base64 characters. To correctly decode, use the function below.
 function encodeToURLSafeBase64(str) {
@@ -140,14 +167,13 @@ function encodeToURLSafeBase64(str) {
 	const Base64string = btoa(String.fromCharCode(...UTF8Array)) // Convert that UTF-8-Array into Base64
 
 	// Base64 contains A–Z a–z 0–9 + / and = for padding.
-	// use built-in function for this: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent
-	const UrlSafeEncoding = encodeURIComponent(Base64string)
+	const UrlSafeEncoding = Base64string.replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "")
 	return UrlSafeEncoding
 }
 
 // Decodes a string created with the above encoding function to a unicode string.
 function decodeURLSafeBase64(str) {
-	let Base64string = decodeURIComponent(str); // We replace the URL-safe variants with their correct Base64 counterparts
+	let Base64string = str.replace(/-/g, "+").replace(/_/g, "/"); // We replace the URL-safe variants with their correct Base64 counterparts
 
 	// And add the stripped "=" symbols until the string is again valid Base64 (has a multiple of 4 length)
 	while (Base64string % 4) {
@@ -158,6 +184,8 @@ function decodeURLSafeBase64(str) {
 	return (new TextDecoder()).decode(UTF8Array); // and parse this as a string and return it.
 }
 
+// url extraction
+
 const urlParameters = new URLSearchParams(window.location.search);
 const puzzleValue = urlParameters.get('') // Assume the encoded string is behind the unnamed parameter, i.e. https://foo.bar/?=<value>
 // Otherwise, we could use a named parameter, i.e. https://foo.bar/?puzzle=<value>
@@ -165,17 +193,16 @@ const puzzleValue = urlParameters.get('') // Assume the encoded string is behind
 // If the parameter is set, use it, otherwise load a default puzzle.
 if (puzzleValue) {
 	try {
+		let puzzleString = ""
+		try {
+			puzzleString = await decompress(decodeURIComponent(puzzleValue))
+		} catch (err) {
+			console.log("puzzle extraction failed, trying legacy decoding...")
+			puzzleString = decodeURLSafeBase64(puzzleValue);
+		}
 
-		//puzzleString = decodeURIComponent(atob(puzzleValue))
-		puzzleString = decodeURLSafeBase64(puzzleValue);
 		console.log(puzzleString)
 		data = JSON.parse(puzzleString);
-
-		//binaryData = Uint8Array.from(atob(puzzleValue), c => c.charCodeAt(0));
-		//data = (new TextDecoder).decode(binaryData);
-
-		// Decode Base64 string and then parse the value into a JSON-object
-		//data = JSON.parse(a);
 
 		console.log(data);
 
@@ -184,7 +211,6 @@ if (puzzleValue) {
 		gesamtlösung = data.gesamtlösung;
 		frageAntwortArr = data.frageAntwort.map(obj => [obj.frage, obj.antwort]);
 		displayPuzzleText();
-
 
 	} catch (err) {
 		console.log("Error loading puzzle from URL parameter");
@@ -197,18 +223,14 @@ if (puzzleValue) {
 
 inputFeld.focus();
 
-// How to share custom puzzles:
-// Transform your puzzle into a JSON-object in the style of any other puzzle you can find in the raetsel/ folder.
-// encode this JSON-object into a special Base64-encoding via first stringifying it (escaping some characters):
-// JSON.stringify(object)
-// and then encoding it:
-// encodeToURLSafeBase64(str)
-//
-// You can then play your puzzle by putting this (loooong) string behind the url as a parameter:
-// https://klammerstadt.de/?=<value>
-// Where <value> is your loooong string you got from the encoding.
+
+// create new puzzles
 
 const toggleButton = document.querySelector("#toggleView button")
 toggleButton.onclick = () => document.querySelectorAll("body>div:not(#toggleView)")
 	.forEach(e => e.classList.toggle("no-display"))
 
+const createArea = document.querySelector("#creator textarea")
+const shareLink = document.querySelector("#creator a")
+createArea.onchange = () => shareLink.setAttribute("href",
+	".?=" + encodeURIComponent(compress(createArea.value)))
