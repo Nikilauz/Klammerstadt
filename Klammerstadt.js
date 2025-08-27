@@ -214,6 +214,6 @@ const guessString = "Weiter raten..."
 
 const toggleButton = document.querySelector("#toggleView button")
 toggleButton.onclick = () => document.querySelectorAll("body>div:not(#toggleView)")
-	.forEach(e => e.classlist.toggle("no-display"))
+	.forEach(e => e.classList.toggle("no-display"))
 toggleButton.innerText = createString
 
