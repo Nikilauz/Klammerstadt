@@ -207,3 +207,13 @@ inputFeld.focus();
 // You can then play your puzzle by putting this (loooong) string behind the url as a parameter:
 // https://klammerstadt.de/?=<value>
 // Where <value> is your loooong string you got from the encoding.
+
+
+const createString = "Neues Rätsel erstellen"
+const guessString = "Weiter raten..."
+
+const toggleButton = document.querySelector("#toggleView button")
+toggleButton.onclick = () => document.querySelectorAll("body>div:not(#toggleView)")
+	.forEach(e => e.classlist.toggle("no-display"))
+toggleButton.innerText = createString
+

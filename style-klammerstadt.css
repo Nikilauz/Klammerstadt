@@ -60,3 +60,7 @@ button:hover {
 .levels {
 	background-color: white;
 }
+
+.no-display {
+	display: none;
+}
