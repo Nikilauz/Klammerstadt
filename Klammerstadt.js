@@ -140,14 +140,14 @@ function encodeToURLSafeBase64(str) {
 	const Base64string = btoa(String.fromCharCode(...UTF8Array)) // Convert that UTF-8-Array into Base64
 
 	// Base64 contains A–Z a–z 0–9 + / and = for padding.
-	// The last 3 are not URL-safe, so we replace them with URL-safe alternative symbols (or strip the extra '=')
-	const urlSafeEncoding = Base64string.replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "")
-	return urlSafeEncoding
+	// use built-in function for this: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent
+	const UrlSafeEncoding = encodeURIComponent(Base64string)
+	return UrlSafeEncoding
 }
 
 // Decodes a string created with the above encoding function to a unicode string.
 function decodeURLSafeBase64(str) {
-	let Base64string = str.replace(/-/g, "+").replace(/_/g, "/"); // We replace the URL-safe variants with their correct Base64 counterparts
+	let Base64string = decodeURIComponent(str); // We replace the URL-safe variants with their correct Base64 counterparts
 
 	// And add the stripped "=" symbols until the string is again valid Base64 (has a multiple of 4 length)
 	while (Base64string % 4) {
